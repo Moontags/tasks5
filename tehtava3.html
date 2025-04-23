@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preventing Form Submission with JavaScript</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Preventing Form Submission with JavaScript</h1>
+        <div class="answer" id="answer23">
+            <h3>Preventing Form Submission with JavaScript</h3>
+            <p>You can prevent a form submission using JavaScript by listening for the form's <code>submit</code> event and calling the <code>preventDefault()</code> method on the event object within the event handler.</p>
+            <p>The <code>preventDefault()</code> method stops the browser's default action, which for the <code>submit</code> event is typically sending the form data to the URL specified in the <code>action</code> attribute and reloading the page.</p>
+
+            <h3>Why Prevent Form Submission?</h3>
+            <p>Reasons why you might want to prevent the default form submission:</p>
+            <ul>
+                <li><strong>Client-Side Validation:</strong> Before sending data to the server, you want to ensure that the user has entered the information in the correct format and that all required fields are filled. By preventing the default submission, you can perform validation with JavaScript and display error messages to the user without a page reload.</li>
+                <li><strong>Asynchronous Data Submission (AJAX):</strong> You might want to send the form data to the server asynchronously using JavaScript (e.g., with the <code>fetch</code> or <code>XMLHttpRequest</code> API) without a full page reload. In this case, the default submission is prevented.</li>
+                <li><strong>Custom Functionality:</strong> You might want to perform other custom actions upon form submission, such as modifying the data before sending it or executing a multi-step process before the actual submission.</li>
+                <li><strong>Single-Page Applications (SPA):</strong> In modern single-page applications, page reloads are generally avoided entirely. Form handling is done entirely on the client-side using routing and state management.</li>
+            </ul>
+
+            <h3>Simple Code Example</h3>
+            <form id="myForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+            <div id="message"></div>
+
+            <script>
+                const form = document.getElementById('myForm');
+                const messageDiv = document.getElementById('message');
+
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const nameInput = document.getElementById('name');
+                    if (nameInput.value.trim() === '') {
+                        messageDiv.textContent = 'The name field cannot be empty.';
+                    } else {
+                        messageDiv.textContent = 'Form submission prevented. The data would have been: ' + nameInput.value;
+                     
+                    }
+                });
+            </script>
+        </div>
+        <a href="index.html" class="back-link">Back to main page</a>
+    </div>
+</body>
+</html>

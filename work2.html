@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Workbench</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+        }
+        pre#output {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #eee;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JavaScript Workbench</h1>
+        <textarea id="code">return "This is great!";</textarea>
+        <button id="runButton">Run</button>
+        <pre id="output"></pre>
+        <a href="index.html" class="back-link">Back to main page</a>
+    </div>
+
+    <script>
+        const codeInput = document.getElementById('code');
+        const runButton = document.getElementById('runButton');
+        const outputDisplay = document.getElementById('output');
+
+        runButton.addEventListener('click', () => {
+            try {
+                const code = codeInput.value;
+                const func = new Function(code);
+                const result = func();
+                outputDisplay.textContent = String(result) + '\n';
+            } catch (error) {
+                outputDisplay.textContent = String(error) + '\n';
+            }
+        });
+    </script>
+</body>
+</html>

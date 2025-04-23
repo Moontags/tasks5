@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Negotiation</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #results div {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            white-space: pre-wrap; 
+        }
+        #error {
+            color: red;
+            font-weight: bold;
+        }
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Content Negotiation</h1>
+        <div class="links">
+        <a href="work2.html" class="back-link">Workbench</a>
+        <a href="work3.html" class="back-link">Conway’s Game of Life </a>
+      </div>
+        <div id="results">
+            <div><strong>Plain Text:</strong> <pre id="plain-text"></pre></div>
+            <div><strong>HTML:</strong> <pre id="html-text"></pre></div>
+            <div><strong>JSON:</strong> <pre id="json-text"></pre></div>
+            <div><strong>Rainbows and Unicorns:</strong> <pre id="unicorn-text"></pre></div>
+            <div id="error"></div>
+        </div>
+        <a href="index.html" class="back-link">Back to the main page</a>
+    </div>
+
+    <script>
+        async function fetchContent(acceptHeader, outputElementId) {
+            try {
+                const response = await fetch('https://eloquentjavascript.net/author', {
+                    headers: {
+                        'Accept': acceptHeader
+                    }
+                });
+                const text = await response.text();
+                document.getElementById(outputElementId).textContent = `${response.status} ${response.statusText}\n${text}`;
+                if (response.status === 406 && acceptHeader === 'application/rainbows+unicorns') {
+                    document.getElementById('error').textContent = 'Asking for application/rainbows+unicorns returned status code 406 "Not Acceptable".';
+                }
+            } catch (error) {
+                document.getElementById(outputElementId).textContent = `Error fetching ${acceptHeader}: ${error}`;
+            }
+        }
+
+        fetchContent('text/plain', 'plain-text');
+        fetchContent('text/html', 'html-text');
+        fetchContent('application/json', 'json-text');
+        fetchContent('application/rainbows+unicorns', 'unicorn-text');
+    </script>
+</body>
+</html>

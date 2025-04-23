@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conway's Game of Life</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #grid-container {
+            display: grid;
+            grid-template-columns: repeat(30, 20px); 
+            gap: 1px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+        .cell {
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border: none;
+            box-sizing: border-box;
+        }
+        .cell.alive {
+            background-color: black;
+        }
+        #nextButton {
+            margin-top: 10px;
+            padding: 11px 20px;
+            background-color: #24622e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Conway's Game of Life</h1>
+        <div id="grid-container"></div>
+        <button id="nextButton">Next generation</button>
+        <a href="index.html" class="back-link">Back to the main page</a>
+    </div>
+
+    <script>
+        const gridContainer = document.getElementById('grid-container');
+        const nextButton = document.getElementById('nextButton');
+        const gridSize = 30;
+        let grid = createRandomGrid(gridSize);
+
+        function createRandomGrid(size) {
+            const newGrid = [];
+            for (let i = 0; i < size; i++) {
+                newGrid[i] = [];
+                for (let j = 0; j < size; j++) {
+                    newGrid[i][j] = Math.random() < 0.5 ? 1 : 0; 
+                }
+            }
+            return newGrid;
+        }
+
+        function displayGrid() {
+            gridContainer.innerHTML = '';
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = 0; j < gridSize; j++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    if (grid[i][j] === 1) {
+                        cell.classList.add('alive');
+                    }
+                    cell.addEventListener('click', () => {
+                        grid[i][j] = 1 - grid[i][j]; 
+                        displayGrid();
+                    });
+                    gridContainer.appendChild(cell);
+                }
+            }
+        }
+
+        function getNeighbors(row, col, currentGrid) {
+            let liveNeighbors = 0;
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    if (i === 0 && j === 0) continue;
+                    const neighborRow = (row + i + gridSize) % gridSize;
+                    const neighborCol = (col + j + gridSize) % gridSize;
+                    liveNeighbors += currentGrid[neighborRow][neighborCol];
+                }
+            }
+            return liveNeighbors;
+        }
+
+        function nextGeneration(currentGrid) {
+            const newGrid = [];
+            for (let i = 0; i < gridSize; i++) {
+                newGrid[i] = [];
+                for (let j = 0; j < gridSize; j++) {
+                    const liveNeighbors = getNeighbors(i, j, currentGrid);
+                    if (currentGrid[i][j] === 1) {
+                        newGrid[i][j] = (liveNeighbors < 2 || liveNeighbors > 3) ? 0 : 1;
+                    } else {
+                        newGrid[i][j] = (liveNeighbors === 3) ? 1 : 0;
+                    }
+                }
+            }
+            return newGrid;
+        }
+
+        nextButton.addEventListener('click', () => {
+            grid = nextGeneration(grid);
+            displayGrid();
+        });
+
+        displayGrid(); 
+    </script>
+</body>
+</html>

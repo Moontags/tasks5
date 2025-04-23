@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP-methods, 404 and Sandboxing</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>HTTP-methods, 404 and Sandboxing</h1>
+        <div class="answer" id="answer21">
+            <h3>A. Different HTTP methods</h3>
+            <p>HTTP (Hypertext Transfer Protocol) defines several methods (verbs) to indicate the desired action to be performed on a resource. Here's a comparison of some common HTTP methods and their intended use:</p>
+            <ul>
+                <li>
+                    <strong>GET:</strong>
+                    <ul>
+                        <li><strong>Purpose:</strong> Retrieve data from a server. Should only retrieve data and have no other effects (idempotent).</li>
+                        <li><strong>Usage:</strong> Used for fetching web pages, images, scripts, and other resources. Data is often passed in the URL as query parameters.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>POST:</strong>
+                    <ul>
+                        <li><strong>Purpose:</strong> Submit data to be processed by a server. Often used to create new resources. Not idempotent (multiple identical requests might have different effects).</li>
+                        <li><strong>Usage:</strong> Used for submitting forms, uploading files, and creating new entries in a database. Data is usually sent in the request body.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>PUT:</strong>
+                    <ul>
+                        <li><strong>Purpose:</strong> Update an existing resource or create a new resource if it doesn't exist. Idempotent (multiple identical requests should have the same effect as a single request).</li>
+                        <li><strong>Usage:</strong> Used for updating specific resources, often identified by their URL. The entire resource is usually replaced with the data in the request body.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>DELETE:</strong>
+                    <ul>
+                        <li><strong>Purpose:</strong> Delete a resource identified by its URL. Idempotent (multiple identical requests should have the same effect as a single request, even if the resource is already deleted).</li>
+                        <li><strong>Usage:</strong> Used for removing resources from a server.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>PATCH:</strong>
+                    <ul>
+                        <li><strong>Purpose:</strong> Apply partial modifications to a resource. Not necessarily idempotent (depends on the specific implementation).</li>
+                        <li><strong>Usage:</strong> Used for updating specific fields of a resource without replacing the entire resource.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>HEAD:</strong>
+                    <ul>
+                        <li><strong>Purpose:</strong> Retrieve the headers that would be returned if the resource were requested with a GET request, without the response body. Idempotent.</li>
+                        <li><strong>Usage:</strong> Useful for checking if a resource exists, its last modified date, content type, etc., without downloading the entire content.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>OPTIONS:</strong>
+                    <ul>
+                        <li><strong>Purpose:</strong> Describe the communication options for the target resource. Allows the client to determine the HTTP methods supported by the server for a specific URL. Idempotent.</li>
+                        <li><strong>Usage:</strong> Often used for preflight requests in CORS (Cross-Origin Resource Sharing).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>B. HTTP response code 404</h3>
+            <p>The HTTP response code <strong>404 Not Found</strong> indicates that the server could not find the requested resource. It means that the server has received the request, but the target resource identified by the request URI does not exist on the server.</p>
+            <p>Possible reasons for a 404 error include:</p>
+            <ul>
+                <li><strong>Incorrect URL:</strong> The user might have mistyped the URL in the address bar.</li>
+                <li><strong>Broken Link:</strong> The link the user clicked on might be outdated or incorrectly entered on the referring website.</li>
+                <li><strong>Resource Moved or Deleted:</strong> The requested resource might have been moved to a different URL or permanently deleted from the server without proper redirects being set up.</li>
+                <li><strong>Server Configuration Issues:</strong> There might be misconfigurations on the web server preventing access to the resource, even if it exists.</li>
+                <li><strong>Client-Side Errors:</strong> Although less common, issues on the client-side (e.g., browser extensions) could sometimes lead to incorrect requests resulting in a 404.</li>
+                <li><strong>Firewall or Proxy Issues:</strong> In some cases, firewalls or proxy servers might block access to certain resources, although this often results in different error codes.</li>
+            </ul>
+
+            <h3>C. HTTP sandboxing</h3>
+            <p>The term "HTTP sandboxing" is not a standard or widely recognized concept within the core HTTP protocol itself. However, the idea of sandboxing in the context of web technologies generally refers to creating isolated environments to limit the capabilities and potential harm of untrusted or potentially malicious code or content.</p>
+            <p>While HTTP doesn't have a built-in "sandboxing" mechanism in the same way that operating systems or browser environments do, several related concepts and technologies contribute to security and isolation in web communication:</p>
+            <ul>
+                <li><strong>CORS (Cross-Origin Resource Sharing):</strong> This is a security mechanism implemented by web browsers to restrict how resources on one domain can be requested by code running on another domain. It's a form of limiting cross-origin interactions.</li>
+                <li><strong>Content Security Policy (CSP):</strong> This is a security standard that allows website owners to control the resources (scripts, styles, images, etc.) that the user agent is allowed to load for a given page. It helps prevent XSS (Cross-Site Scripting) attacks by restricting the sources of active content.</li>
+                <li><strong>Subresource Integrity (SRI):</strong> This feature allows browsers to verify that files fetched from CDNs or other third-party sources haven't been tampered with.</li>
+                <li><strong>HTTP Strict Transport Security (HSTS):</strong> This security policy mechanism helps protect websites against protocol downgrade attacks and cookie hijacking by enforcing HTTPS connections.</li>
+                <li><strong>Browser Sandboxing:</strong> Web browsers themselves implement robust sandboxing mechanisms to isolate web pages and prevent malicious code running in one tab from affecting other tabs or the user's system. This sandboxing relies on operating system features and browser-specific implementations, and it affects how HTTP responses are processed and rendered.</li>
+            </ul>
+            <p>So, while there isn't a specific "HTTP sandboxing" protocol feature, the principles of isolation and security are addressed through various complementary mechanisms that work in conjunction with HTTP.</p>
+        </div>
+        <a href="index.html" class="back-link">Back to the main page</a>
+    </div>
+</body>
+</html>

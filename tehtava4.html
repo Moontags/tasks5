@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Local Storage Example</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JavaScript Local Storage Example</h1>
+        <div class="answer" id="answer24">
+            <h3>What is Local Storage in relation to JavaScript?</h3>
+            <p><code>localStorage</code> is part of the Web Storage API that allows you to store key-value pairs in the browser's storage. The data persists across browser sessions, meaning it doesn't get deleted when the browser is closed. <code>localStorage</code> is scoped to the origin (domain, protocol, and port) of the script that loaded the page.</p>
+
+            <h3>How can you use it?</h3>
+            <p>The methods of the <code>localStorage</code> object include:</p>
+            <ul>
+                <li><code>setItem(key, value)</code>: Stores a key-value pair.</li>
+                <li><code>getItem(key)</code>: Retrieves the value for a given key.</li>
+                <li><code>removeItem(key)</code>: Removes a key-value pair.</li>
+                <li><code>clear()</code>: Clears all stored key-value pairs.</li>
+                <li><code>key(index)</code>: Returns the key at a given index.</li>
+                <li><code>length</code>: Returns the number of stored key-value pairs.</li>
+            </ul>
+
+            <h3>Code Example</h3>
+            <form>
+                <div class="form-group">
+                    <label for="myInput">Enter text:</label>
+                    <input type="text" id="myInput" name="myInput" placeholder="Write here...">
+                </div>
+            </form>
+            <div id="output"></div>
+        </div>
+        <a href="index.html" class="back-link">Back to main page</a>
+    </div>
+
+    <script>
+        const inputElement = document.getElementById('myInput');
+        const outputElement = document.getElementById('output');
+        const storageKey = 'myInputValue';
+
+        inputElement.addEventListener('blur', function() {
+            const text = this.value;
+            localStorage.setItem(storageKey, text);
+            console.log(`Saved "${text}" with key "${storageKey}"`);
+        });
+
+        window.addEventListener('load', function() {
+            const storedText = localStorage.getItem(storageKey);
+            if (storedText) {
+                outputElement.textContent = `Stored text: "${storedText}"`;
+                console.log(`Read "${storedText}" with key "${storageKey}"`);
+            } else {
+                outputElement.textContent = 'Enter text and leave the field to see it get saved.';
+            }
+        });
+    </script>
+</body>
+</html>
